@@ -1,1 +1,10 @@
-[]
+{
+    "raju@gmail.com": {
+        "code": 724811,
+        "timestamp": 1749806371
+    },
+    "priyankas@gmail.com": {
+        "code": 285919,
+        "timestamp": 1749806387
+    }
+}

@@ -1,7 +1,12 @@
 [
     {
-        "id": "684be063ecd1f",
-        "name": "cloth wash",
+        "id": "684beceb89625",
+        "name": "Home-work",
+        "completed": false
+    },
+    {
+        "id": "684bed09282ae",
+        "name": "Gym",
         "completed": false
     }
 ]

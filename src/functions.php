@@ -46,7 +46,12 @@ function subscribeEmail($email) {
 
     $code = generateVerificationCode();
     $pending = file_exists('pending_subscriptions.txt') ? json_decode(file_get_contents('pending_subscriptions.txt'), true) : [];
-    $pending[$email] = $code;
+
+    $pending[$email] = [
+        'code' => $code,
+        'timestamp' => time()
+    ];
+
     file_put_contents('pending_subscriptions.txt', json_encode($pending, JSON_PRETTY_PRINT));
 
     // Simulate sending a verification email
@@ -58,14 +63,14 @@ function subscribeEmail($email) {
 function verifySubscription($email, $code) {
     $pending = file_exists('pending_subscriptions.txt') ? json_decode(file_get_contents('pending_subscriptions.txt'), true) : [];
 
-    if (isset($pending[$email]) && $pending[$email] == $code) {
+    if (isset($pending[$email]) && $pending[$email]['code'] == $code) {
         unset($pending[$email]);
         file_put_contents('pending_subscriptions.txt', json_encode($pending, JSON_PRETTY_PRINT));
 
         $subscribers = file_exists('subscribers.txt') ? json_decode(file_get_contents('subscribers.txt'), true) : [];
         if (!in_array($email, $subscribers)) {
             $subscribers[] = $email;
-            file_put_contents('subscribers.txt', json_encode($subscribers, JSON_PRETTY_PRINT));
+            file_put_contents('subscribers.txt', json_encode($subscribers)); // single-line
         }
         return true;
     }
@@ -75,7 +80,7 @@ function verifySubscription($email, $code) {
 function unsubscribeEmail($email) {
     $subscribers = file_exists('subscribers.txt') ? json_decode(file_get_contents('subscribers.txt'), true) : [];
     $subscribers = array_filter($subscribers, fn($e) => $e !== $email);
-    file_put_contents('subscribers.txt', json_encode(array_values($subscribers), JSON_PRETTY_PRINT));
+    file_put_contents('subscribers.txt', json_encode(array_values($subscribers))); // single-line
 }
 
 function sendTaskReminders() {

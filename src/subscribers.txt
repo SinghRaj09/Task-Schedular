@@ -1,4 +1,1 @@
-[
-    "singh1406raj@gmail.com",
-    "shinoythakur@gmail.com"
-]
+["rajsingh@gmail.com","surajsingh@gmail.com"]
